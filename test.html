@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    h1 {
+      text-align: center;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #789;
+      border-collapse: collapse;
+      height: 80px;
+      /* width: 500px; */
+      margin: auto;
+      text-align: center;
+    }
+
+    th {
+      padding: 5px 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>订单确认</h1>
+
+
+  <script>
+    let GoodsName = prompt('Please enter the Goods Name')
+    let GoodsPrice = +prompt('Please enter the Goods Price')
+    let GoodsQuantity = +prompt('Please enter the Goods Quantity')
+    let GoodsReceiveLocation = prompt('Please enter the Goods Receive Location')
+
+    let TotalPrice = GoodsPrice * GoodsQuantity
+
+    document.write(`
+        <table>
+            <tr>
+                <th>名称</th>
+                <th>单价</th>
+                <th>数量</th>
+                <th>总价</th>
+                <th>地址</th>
+            </tr>
+            <tr>
+                <td>${GoodsName}</Prog>
+                <td>${GoodsPrice}元</td>
+                <td>${GoodsQuantity}个</td>
+                <td>${TotalPrice}元</td>
+                <td>${GoodsReceiveLocation}</td>
+            </tr>
+         </table>
+        `)
+  </script>
+
+</body>
+
+</html>
