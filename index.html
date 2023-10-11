@@ -28,32 +28,50 @@
 </head>
 
 <body>
-  <h1>订单确认</h1>
-
+  <h1>计算你的BMI</h1>
 
   <script>
-    let GoodsName = prompt('Please enter the Goods Name')
-    let GoodsPrice = +prompt('Please enter the Goods Price')
-    let GoodsQuantity = +prompt('Please enter the Goods Quantity')
-    let GoodsReceiveLocation = prompt('Please enter the Goods Receive Location')
+    let NickName = prompt('Please enter the your nick name')
+    let Stature = +prompt('Please enter the your body height (m)')
+    let Weight = +prompt('Please enter the your body weight (Kg)')
 
-    let TotalPrice = GoodsPrice * GoodsQuantity
+    let BMI = parseInt(Weight / (Stature * Stature))
+    let Classification
+
+    // if (BMI <= 18.4) {
+    //     Classification = '偏瘦';
+    // } else {
+    //     Classification = '肥死了';
+    // }
+
+    if (BMI <= 18.4) {
+      Classification = '偏瘦';
+    } else if (BMI >= 18.5 && BMI <= 23.9) {
+      Classification = '正常';
+    } else if (BMI >= 24 && BMI <= 27.9) {
+      Classification = '你是猪';
+    } else if (BMI >= 28) {
+      Classification = '你是大肥猪';
+    } else {
+      /* nothing*/
+    }
+
 
     document.write(`
         <table>
             <tr>
-                <th>名称</th>
-                <th>单价</th>
-                <th>数量</th>
-                <th>总价</th>
-                <th>地址</th>
+                <th>昵称</th>
+                <th>身高</th>
+                <th>体重</th>
+                <th>BMI值</th>
+                <th>结果分类</th>
             </tr>
             <tr>
-                <td>${GoodsName}</Prog>
-                <td>${GoodsPrice}元</td>
-                <td>${GoodsQuantity}个</td>
-                <td>${TotalPrice}元</td>
-                <td>${GoodsReceiveLocation}</td>
+                <td>${NickName}</Prog>
+                <td>${Stature}米</td>
+                <td>${Weight}千克</td>
+                <td>${BMI}</td>
+                <td>${Classification}</td>
             </tr>
          </table>
         `)
