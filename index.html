@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="styles.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Calculate Your BMI</title>
   <style>
     h1 {
       text-align: center;
@@ -25,59 +25,110 @@
     th {
       padding: 5px 30px;
     }
+
+    .user-data {
+      text-align: center;
+    }
   </style>
 </head>
 
 <body>
-  <h1>计算你的BMI</h1>
+  <h1>Calculate Your BMI</h1>
 
   <script>
-    let NickName = prompt('Please enter the your nick name')
-    let Stature = +prompt('Please enter the your body height (m)')
-    let Weight = +prompt('Please enter the your body weight (Kg)')
-
-    let BMI = parseInt(Weight / (Stature * Stature))
-    let Classification
-
-    // if (BMI <= 18.4) {
-    //     Classification = '偏瘦';
-    // } else {
-    //     Classification = '肥死了';
-    // }
-
-    if (BMI <= 18.4) {
-      Classification = '偏瘦';
-    } else if (BMI >= 18.5 && BMI <= 23.9) {
-      Classification = '正常';
-    } else if (BMI >= 24 && BMI <= 27.9) {
-      Classification = '你是猪';
-    } else if (BMI >= 28) {
-      Classification = '你是大肥猪';
-    } else {
-      /* nothing*/
+    // Function to save user data to local storage
+    function saveUserData(user) {
+      let userData = JSON.parse(localStorage.getItem('userData')) || [];
+      userData.push(user);
+      localStorage.setItem('userData', JSON.stringify(userData));
     }
 
+    function calculateBMI() {
+      let NickName = prompt('Please enter your nickname');
+      let Stature = +prompt('Please enter your body height (m)');
+      let Weight = +prompt('Please enter your body weight (Kg)');
 
-    document.write(`
-        <table>
-            <tr>
-                <th>昵称</th>
-                <th>身高</th>
-                <th>体重</th>
-                <th>BMI值</th>
-                <th>结果分类</th>
-            </tr>
-            <tr>
-                <td>${NickName}</Prog>
-                <td>${Stature}米</td>
-                <td>${Weight}千克</td>
-                <td>${BMI}</td>
-                <td>${Classification}</td>
-            </tr>
-         </table>
-        `)
+      let BMI = parseFloat(Weight / (Stature * Stature));
+
+      let Classification;
+
+      if (BMI <= 18.4) {
+        Classification = '偏瘦';
+      } else if (BMI >= 18.5 && BMI <= 23.9) {
+        Classification = '正常';
+      } else if (BMI >= 24 && BMI <= 27.9) {
+        Classification = '你是猪';
+      } else if (BMI >= 28) {
+        Classification = '你是大肥猪';
+      } else {
+        // Handle other cases here if needed
+      }
+
+      let user = {
+        NickName,
+        Stature,
+        Weight,
+        BMI: BMI.toFixed(2),
+        Classification,
+      };
+
+      saveUserData(user);
+      displayUserData(user);
+    }
+
+    function displayUserData(user) {
+      let userDataContainer = document.querySelector('.user-data');
+
+      // Display user information beneath the table
+      userDataContainer.innerHTML += `
+          <div>
+            <h2>User Data:</h2>
+            <p>Nickname: ${user.NickName}</p>
+            <p>Height: ${user.Stature} meters</p>
+            <p>Weight: ${user.Weight} kg</p>
+            <p>BMI: ${user.BMI}</p>
+            <p>Classification: ${user.Classification}</p>
+          </div>
+        `;
+
+      // Display user information in the table
+      let table = document.querySelector('table');
+      let newRow = table.insertRow(-1);
+      let cell1 = newRow.insertCell(0);
+      let cell2 = newRow.insertCell(1);
+      let cell3 = newRow.insertCell(2);
+      let cell4 = newRow.insertCell(3);
+      let cell5 = newRow.insertCell(4);
+
+      cell1.innerHTML = user.NickName;
+      cell2.innerHTML = user.Stature + ' meters';
+      cell3.innerHTML = user.Weight + ' kg';
+      cell4.innerHTML = user.BMI;
+      cell5.innerHTML = user.Classification;
+    }
+
+    // Load and display previously saved user data on page load
+    let storedUserData = JSON.parse(localStorage.getItem('userData'));
+    if (storedUserData) {
+      storedUserData.forEach((user) => {
+        displayUserData(user);
+      });
+    }
   </script>
 
+  <button onclick="calculateBMI()">Calculate BMI</button>
+
+  <table>
+    <tr>
+      <th>昵称</th>
+      <th>身高</th>
+      <th>体重</th>
+      <th>BMI值</th>
+      <th>结果分类</th>
+    </tr>
+  </table>
+
+  <div class="user-data"></div>
 </body>
 
 </html>
